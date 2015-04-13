@@ -1,19 +1,23 @@
 <section data-ng-controller="GroceriesController" data-ng-init="find()">
     <div class="page-header">
-        <h1>Groceries</h1>
+        <h1>Grocery list</h1>
     </div>
-    <div class="list-group">
-        <a data-ng-repeat="grocery in groceries" data-ng-href="#!/groceries/{{grocery._id}}" class="list-group-item">
-			<small class="list-group-item-text">
-				Posted on
-				<span data-ng-bind="grocery.created | date:'medium'"></span>
-				by
-				<span data-ng-bind="grocery.user.displayName"></span>
-			</small>
-			<h4 class="list-group-item-heading" data-ng-bind="grocery.name"></h4>
-        </a>
-    </div>
-    <div class="alert alert-warning text-center" data-ng-hide="!groceries.$resolved || groceries.length">
-    	No Groceries yet, why don't you <a href="/#!/groceries/create">create one</a>?
-    </div>
+    <form name="form" class="form" ng-show="isAuthenticated">
+        <input type="text" data-ng-model="item" id="item" class="form-control" placeholder="Item" required>
+        x <input type="text" data-ng-model="quantity" id="quantity" class="form-control" placeholder="units" required>
+        <button id="add" class="btn btn-primary" ng-click="create()">
+            <i class="glyphicon glyphicon-plus"></i>
+        </button>
+        <div id="error" data-ng-show="error" class="text-danger">
+            <strong data-ng-bind="error"></strong>
+        </div>
+    </form>
+    <ul class="list-group">
+        <li data-ng-repeat="grocery in groceries" data-ng-href="#!/groceries/{{grocery._id}}" class="list-group-item">
+            <span class="item" data-ng-bind="grocery.item"></span>
+            <span class="badge-wrap">
+                <span class="quantity badge badge-green" data-ng-bind="grocery.quantity"></span>
+            </span>
+        </li>
+    </ul>
 </section>

@@ -5,19 +5,26 @@ angular.module('groceries').controller('GroceriesController', ['$scope', '$state
 	function($scope, $stateParams, $location, Authentication, Groceries) {
 		$scope.authentication = Authentication;
 
+		var user = $scope.authentication.user;
+		$scope.isAuthenticated = user;
+
 		// Create new Grocery
 		$scope.create = function() {
 			// Create new Grocery object
 			var grocery = new Groceries ({
-				name: this.name
+				item: this.item,
+				quantity: this.quantity
 			});
 
-			// Redirect after save
 			grocery.$save(function(response) {
-				$location.path('groceries/' + response._id);
+				// add grocery item to list
+				$scope.groceries.unshift(grocery);
 
 				// Clear form fields
-				$scope.name = '';
+				$scope.item = '';
+				$scope.quantity = '';
+				$scope.form.$setPristine();
+
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

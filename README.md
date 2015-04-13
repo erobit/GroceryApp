@@ -12,6 +12,10 @@ Total =
 
 ## e2e Testing
 
-If you did not npm install, ensure you run to install webdriver
+grunt test - runs the entire tests suite including e2e
+
+npm install - dependencies for e2e are in the package.json
+
+If the e2e tests do not run, execute command below
 
 node_modules/protractor/bin/webdriver-manager update

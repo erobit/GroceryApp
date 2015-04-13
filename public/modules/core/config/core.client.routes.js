@@ -6,11 +6,11 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		// Redirect to home view when route not found
 		$urlRouterProvider.otherwise('/');
 
-		// Home state routing
+		// Home state routing - home updated to groceries
 		$stateProvider.
 		state('home', {
-			url: '/',
-			templateUrl: 'modules/core/views/home.client.view.html'
-		});
+            url: '/',
+            templateUrl: 'modules/groceries/views/list-groceries.client.view.html'
+        });
 	}
 ]);

@@ -38,7 +38,8 @@ describe('Grocery CRUD tests', function() {
 		// Save a user to the test db and create new Grocery
 		user.save(function() {
 			grocery = {
-				name: 'Grocery Name'
+				item: 'Grocery Name',
+				quantity: 1
 			};
 
 			done();
@@ -75,7 +76,8 @@ describe('Grocery CRUD tests', function() {
 
 								// Set assertions
 								(groceries[0].user._id).should.equal(userId);
-								(groceries[0].name).should.match('Grocery Name');
+								(groceries[0].item).should.match('Grocery Name');
+								(groceries[0].quantity).should.equal(1);
 
 								// Call the assertion callback
 								done();
@@ -94,9 +96,9 @@ describe('Grocery CRUD tests', function() {
 			});
 	});
 
-	it('should not be able to save Grocery instance if no name is provided', function(done) {
-		// Invalidate name field
-		grocery.name = '';
+	it('should not be able to save Grocery instance if no item is provided', function(done) {
+		// Invalidate item field
+		grocery.item = '';
 
 		agent.post('/auth/signin')
 			.send(credentials)
@@ -114,7 +116,7 @@ describe('Grocery CRUD tests', function() {
 					.expect(400)
 					.end(function(grocerySaveErr, grocerySaveRes) {
 						// Set message assertion
-						(grocerySaveRes.body.message).should.match('Please fill Grocery name');
+						(grocerySaveRes.body.message).should.match('Please enter a grocery item');
 						
 						// Handle Grocery save error
 						done(grocerySaveErr);
@@ -141,8 +143,8 @@ describe('Grocery CRUD tests', function() {
 						// Handle Grocery save error
 						if (grocerySaveErr) done(grocerySaveErr);
 
-						// Update Grocery name
-						grocery.name = 'WHY YOU GOTTA BE SO MEAN?';
+						// Update Grocery item
+						grocery.item = 'WHY YOU GOTTA BE SO MEAN?';
 
 						// Update existing Grocery
 						agent.put('/groceries/' + grocerySaveRes.body._id)
@@ -154,7 +156,7 @@ describe('Grocery CRUD tests', function() {
 
 								// Set assertions
 								(groceryUpdateRes.body._id).should.equal(grocerySaveRes.body._id);
-								(groceryUpdateRes.body.name).should.match('WHY YOU GOTTA BE SO MEAN?');
+								(groceryUpdateRes.body.item).should.match('WHY YOU GOTTA BE SO MEAN?');
 
 								// Call the assertion callback
 								done();
@@ -163,7 +165,7 @@ describe('Grocery CRUD tests', function() {
 			});
 	});
 
-	it('should be able to get a list of Groceries if not signed in', function(done) {
+	it('should not be able to get a list of Groceries if not signed in', function(done) {
 		// Create new Grocery model instance
 		var groceryObj = new Grocery(grocery);
 
@@ -173,7 +175,7 @@ describe('Grocery CRUD tests', function() {
 			request(app).get('/groceries')
 				.end(function(req, res) {
 					// Set assertion
-					res.body.should.be.an.Array.with.lengthOf(1);
+					res.body.should.be.an.Array.with.lengthOf(0);
 
 					// Call the assertion callback
 					done();
@@ -183,7 +185,7 @@ describe('Grocery CRUD tests', function() {
 	});
 
 
-	it('should be able to get a single Grocery if not signed in', function(done) {
+	it('should not be able to get a single Grocery if not signed in', function(done) {
 		// Create new Grocery model instance
 		var groceryObj = new Grocery(grocery);
 
@@ -192,7 +194,7 @@ describe('Grocery CRUD tests', function() {
 			request(app).get('/groceries/' + groceryObj._id)
 				.end(function(req, res) {
 					// Set assertion
-					res.body.should.be.an.Object.with.property('name', grocery.name);
+					res.body.should.be.an.Object.with.property('item', grocery.item);
 
 					// Call the assertion callback
 					done();

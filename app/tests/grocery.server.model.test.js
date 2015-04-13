@@ -29,7 +29,8 @@ describe('Grocery Model Unit Tests:', function() {
 
 		user.save(function() { 
 			grocery = new Grocery({
-				name: 'Grocery Name',
+				item: 'Grocery Name',
+				quantity: 1,
 				user: user
 			});
 
@@ -45,8 +46,8 @@ describe('Grocery Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error when try to save without name', function(done) { 
-			grocery.name = '';
+		it('should be able to show an error when try to save without item', function(done) { 
+			grocery.item = '';
 
 			return grocery.save(function(err) {
 				should.exist(err);

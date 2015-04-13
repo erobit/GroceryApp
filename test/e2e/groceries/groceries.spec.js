@@ -47,4 +47,26 @@ describe('Groceries -', function() {
 
   });
 
+  describe('As a user, I should be able to edit grocery items', function() {
+
+    it('should allow me to edit a grocery item', function() {
+      page.addItem('Jalapenos', 5);
+      page.editItem(0, 'Scotch Bonnet Peppers', 10);
+      expect(page.itemAt(0).getText()).toEqual('Scotch Bonnet Peppers');
+      expect(page.quantityAt(0).getText()).toEqual('10');
+    });
+
+  });
+
+  describe('As a user, I should be able to delete a grocery item', function() {
+
+    it('should allow me to delete an item', function() {
+      page.addItem('delete me', 1);
+      expect(page.itemAt(0).getText()).toEqual('delete me');
+      page.deleteItem(0);
+      expect(page.itemAt(0).getText()).toNotEqual('delete me');
+    });
+
+  });
+
 });

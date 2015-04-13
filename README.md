@@ -1,2 +1,10 @@
-# GroceryApp
-GroceryApp - Personal grocery list using MEAN.js
+## GroceryApp
+
+A personal grocery items list built using the MEAN.js stack.
+
+## Duration
+
+Start time = 8:20pm
+End time =
+
+Total = 

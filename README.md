@@ -14,11 +14,11 @@ Total = 2h 45min
 
 npm install
 
-# Testing (runs the entire tests suite including e2e)
+## Testing (runs the entire tests suite including e2e)
 
 grunt test
 
-# Running the stack
+## Running the stack
 
 grunt
 

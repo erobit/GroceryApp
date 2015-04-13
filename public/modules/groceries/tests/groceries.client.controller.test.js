@@ -177,5 +177,20 @@
 			// Test array after successful delete
 			expect(scope.groceries.length).toBe(0);
 		}));
+
+		it('$scope.edit() should set scope.editIndex', inject(function(Groceries) {
+			scope.edit(55);
+			expect(scope.editIndex).toBe(55);
+		}));
+
+		it('$scope.save() should set scope.grocery', inject(function(Groceries) {
+			var sampleGroceryPostData = new Groceries({
+				item: 'New Grocery',
+				quantity: 2
+			});
+			scope.save(sampleGroceryPostData);
+			expect(scope.grocery).toEqualData(sampleGroceryPostData);
+		}));
+
 	});
 }());

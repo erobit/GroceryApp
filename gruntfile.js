@@ -8,7 +8,8 @@ module.exports = function(grunt) {
 		clientViews: ['public/modules/**/views/**/*.html'],
 		clientJS: ['public/js/*.js', 'public/modules/**/*.js'],
 		clientCSS: ['public/modules/**/*.css'],
-		mochaTests: ['app/tests/**/*.js']
+		mochaTests: ['app/tests/**/*.js'],
+		e2eTests: ['test/e2e/**/*.js']
 	};
 
 	// Project Configuration
@@ -139,6 +140,13 @@ module.exports = function(grunt) {
 			unit: {
 				configFile: 'karma.conf.js'
 			}
+		},
+		protractor: {
+		  options: {
+		    keepAlive: true,
+		    configFile: 'test/protractor.conf.js'
+		  },
+		  run: {}
 		}
 	});
 
@@ -172,6 +180,9 @@ module.exports = function(grunt) {
 	// Build task(s).
 	grunt.registerTask('build', ['lint', 'loadConfig', 'ngAnnotate', 'uglify', 'cssmin']);
 
+	// load grunt protractor runner
+	grunt.loadNpmTasks('grunt-protractor-runner');
+
 	// Test task.
-	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
+	grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit', 'protractor:run']);
 };

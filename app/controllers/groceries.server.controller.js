@@ -81,7 +81,7 @@ exports.list = function(req, res) {
 		} else {
 			var userGroceries = req.user ? 
 				groceries.filter(function(item) { 
-					return item.user.id == req.user.id; 
+					return item.user.id === req.user.id; 
 				}) : [];
 			res.jsonp(userGroceries);
 		}

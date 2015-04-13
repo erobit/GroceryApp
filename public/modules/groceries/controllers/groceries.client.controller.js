@@ -55,7 +55,7 @@ angular.module('groceries').controller('GroceriesController', ['$scope', '$state
 			$scope.groceries[index] = Groceries.get({ 
 				groceryId: grocery._id
 			});
-		}
+		};
 
 		// Remove existing Grocery
 		$scope.remove = function(grocery) {

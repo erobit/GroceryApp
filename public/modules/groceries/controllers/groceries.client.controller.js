@@ -52,7 +52,6 @@ angular.module('groceries').controller('GroceriesController', ['$scope', '$state
 			var grocery = $scope.grocery;
 
 			grocery.$update(function() {
-				$location.path('groceries/' + grocery._id);
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

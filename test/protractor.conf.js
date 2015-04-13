@@ -11,8 +11,8 @@ exports.config = {
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
   suites: {
-    groceries: './e2e/groceries/*spec.js',
-    auth: './e2e/auth/*spec.js'
+    auth: './e2e/auth/*spec.js',
+    groceries: './e2e/groceries/*spec.js'
   },
 
   // Options to be passed to Jasmine-node.

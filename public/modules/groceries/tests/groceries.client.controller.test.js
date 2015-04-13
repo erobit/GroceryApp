@@ -53,7 +53,8 @@
 		it('$scope.find() should create an array with at least one Grocery object fetched from XHR', inject(function(Groceries) {
 			// Create sample Grocery using the Groceries service
 			var sampleGrocery = new Groceries({
-				name: 'New Grocery'
+				item: 'New Grocery',
+				quantity: 1
 			});
 
 			// Create a sample Groceries array that includes the new Grocery
@@ -73,7 +74,8 @@
 		it('$scope.findOne() should create an array with one Grocery object fetched from XHR using a groceryId URL parameter', inject(function(Groceries) {
 			// Define a sample Grocery object
 			var sampleGrocery = new Groceries({
-				name: 'New Grocery'
+				item: 'New Grocery',
+				quantity: 1
 			});
 
 			// Set the URL parameter
@@ -90,20 +92,28 @@
 			expect(scope.grocery).toEqualData(sampleGrocery);
 		}));
 
-		it('$scope.create() with valid form data should send a POST request with the form input values and then locate to new object URL', inject(function(Groceries) {
+		it('$scope.create() with valid form data should send a POST request with the form input values and stay on the same URL', inject(function(Groceries) {
 			// Create a sample Grocery object
 			var sampleGroceryPostData = new Groceries({
-				name: 'New Grocery'
+				item: 'New Grocery',
+				quantity: 2
 			});
 
 			// Create a sample Grocery response
 			var sampleGroceryResponse = new Groceries({
 				_id: '525cf20451979dea2c000001',
-				name: 'New Grocery'
+				item: 'New Grocery',
+				quantity: 2
 			});
 
+			// mock groceries array and form object
+			scope.groceries = [];
+			scope.groceries.push(sampleGroceryPostData);
+			scope.form = { $setPristine: function() {}};
+
 			// Fixture mock form input values
-			scope.name = 'New Grocery';
+			scope.item = 'New Grocery';
+			scope.quantity = 2;
 
 			// Set POST response
 			$httpBackend.expectPOST('groceries', sampleGroceryPostData).respond(sampleGroceryResponse);
@@ -113,17 +123,25 @@
 			$httpBackend.flush();
 
 			// Test form inputs are reset
-			expect(scope.name).toEqual('');
+			expect(scope.item).toEqual('');
+			expect(scope.quantity).toEqual('');
 
-			// Test URL redirection after the Grocery was created
-			expect($location.path()).toBe('/groceries/' + sampleGroceryResponse._id);
+			// item should be added to the groceries list
+			expect(scope.groceries.length, 2);
+
+			// new item should be added to the front (unshift) of the array
+			expect(scope.groceries[0]._id, sampleGroceryResponse._id);
+
+			// location should stay the same - no redirect
+			expect($location.path()).toBe('');
 		}));
 
 		it('$scope.update() should update a valid Grocery', inject(function(Groceries) {
 			// Define a sample Grocery put data
 			var sampleGroceryPutData = new Groceries({
 				_id: '525cf20451979dea2c000001',
-				name: 'New Grocery'
+				item: 'New Grocery',
+				quantity: 2
 			});
 
 			// Mock Grocery in scope
@@ -136,8 +154,8 @@
 			scope.update();
 			$httpBackend.flush();
 
-			// Test URL location to new object
-			expect($location.path()).toBe('/groceries/' + sampleGroceryPutData._id);
+			// stay on the same page
+			expect($location.path()).toBe('');
 		}));
 
 		it('$scope.remove() should send a DELETE request with a valid groceryId and remove the Grocery from the scope', inject(function(Groceries) {

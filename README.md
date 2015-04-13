@@ -14,13 +14,15 @@ Total = 2h 45min
 
 npm install
 
+## Running the stack
+
+grunt
+
 ## Testing (runs the entire tests suite including e2e)
 
 grunt test
 
-## Running the stack
-
-grunt
+Note: you need to have the stack running for the e2e tests to pass
 
 ## Conclusions
 

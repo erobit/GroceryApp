@@ -158,6 +158,36 @@
 			expect($location.path()).toBe('');
 		}));
 
+		it('$scope.cancel() on edit should restore the item', inject(function(Groceries) {
+			// Define a sample Grocery object
+			var sampleGrocery = new Groceries({
+				_id: '525a8422f6d0f87f0e407a33',
+				item: 'New Grocery',
+				quantity: 1
+			});
+
+			scope.groceries = [];
+			scope.groceries.push(sampleGrocery);
+
+			scope.edit(0);
+
+			scope.groceries[0].item = 'Grocery++';
+			scope.groceries[0].quantity = 99;
+
+			// Set GET response
+			$httpBackend.expectGET(/groceries\/([0-9a-fA-F]{24})$/).respond(sampleGrocery);
+
+			scope.cancel(true);
+			$httpBackend.flush();
+
+			// expect the edit index to be set to null
+			expect(scope.editIndex).toBeNull();
+
+			// expect the edited item to be restored to its previous state
+			expect(scope.groceries[0].item).toEqual(sampleGrocery.item);
+			expect(scope.groceries[0].quantity).toEqual(sampleGrocery.quantity);
+		}));
+
 		it('$scope.remove() should send a DELETE request with a valid groceryId and remove the Grocery from the scope', inject(function(Groceries) {
 			// Create new Grocery object
 			var sampleGrocery = new Groceries({

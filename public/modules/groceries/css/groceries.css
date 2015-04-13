@@ -1,11 +1,11 @@
 input {
   margin-right:10px;
 }
-#item {
+#item, .editItem {
   width: 200px;
   display: inline;
 }
-#quantity {
+#quantity, .editQuantity {
   margin-left:10px;
   width: 60px;
   text-align: center;

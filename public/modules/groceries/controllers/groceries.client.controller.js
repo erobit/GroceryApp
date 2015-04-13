@@ -5,9 +5,12 @@ angular.module('groceries').controller('GroceriesController', ['$scope', '$state
 	function($scope, $stateParams, $location, Authentication, Groceries) {
 		$scope.authentication = Authentication;
 
+		// current row being edited
+		$scope.editIndex = null;
+		
 		var user = $scope.authentication.user;
 		$scope.isAuthenticated = user;
-
+		
 		// Create new Grocery
 		$scope.create = function() {
 			// Create new Grocery object
@@ -30,6 +33,30 @@ angular.module('groceries').controller('GroceriesController', ['$scope', '$state
 			});
 		};
 
+		$scope.edit = function(index) {
+			$scope.editIndex = index;
+		};
+
+		$scope.showEdit = function(index) {
+			return $scope.editIndex === index;
+		};
+
+		// cancel edit - revert will restore
+		$scope.cancel = function(restore) {
+			if (restore)
+				$scope.restore();
+			$scope.editIndex = null;
+		};
+
+		// restore an edited cell if user cancels
+		$scope.restore = function() {
+			var index = $scope.editIndex;
+			var grocery = $scope.groceries[index];
+			$scope.groceries[index] = Groceries.get({ 
+				groceryId: grocery._id
+			});
+		}
+
 		// Remove existing Grocery
 		$scope.remove = function(grocery) {
 			if ( grocery ) { 
@@ -47,17 +74,24 @@ angular.module('groceries').controller('GroceriesController', ['$scope', '$state
 			}
 		};
 
+		$scope.save = function(grocery) {
+			$scope.grocery = grocery;
+			$scope.update();
+		};
+
 		// Update existing Grocery
 		$scope.update = function() {
 			var grocery = $scope.grocery;
+			$scope.cancel(false);
 
 			grocery.$update(function() {
+
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
 		};
 
-		// Find a list of Groceries
+		// Filter to only show our groceries when logged in
 		$scope.find = function() {
 			$scope.groceries = Groceries.query();
 		};

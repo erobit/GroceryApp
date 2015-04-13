@@ -6,16 +6,34 @@ A personal grocery items list built using the MEAN.js stack.
 
 Start time = 8:20pm
 
-End time =
+End time = 11:05pm
 
-Total = 
+Total = 2h 45min
 
-## e2e Testing
+## Installation
 
-npm install --dev 
+npm install
 
-grunt test (runs the entire tests suite including e2e)
+# Testing (runs the entire tests suite including e2e)
 
-If the e2e tests do not run, execute command below
+grunt test
 
-node_modules/protractor/bin/webdriver-manager update
+# Running the stack
+
+grunt
+
+## Conclusions
+
+It was a blast setting up e2e tests (new for me). They require
+a bit of work to properly extend the test to cover auth/non auth
+users, but overall another dimension to the test suite that can
+help with integration / BDD style tests.
+
+Overall I am happy with the results and I hope you are too!
+
+Thank you very much for your consideration.
+
+
+Sincerely,
+
+Eric Robitaille

@@ -12,9 +12,9 @@ Total =
 
 ## e2e Testing
 
-grunt test - runs the entire tests suite including e2e
+npm install --dev 
 
-npm install - dependencies for e2e are in the package.json
+grunt test (runs the entire tests suite including e2e)
 
 If the e2e tests do not run, execute command below
 

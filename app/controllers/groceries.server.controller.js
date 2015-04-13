@@ -14,7 +14,7 @@ var mongoose = require('mongoose'),
 exports.create = function(req, res) {
 	var grocery = new Grocery(req.body);
 	grocery.user = req.user;
-
+	
 	grocery.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -79,7 +79,11 @@ exports.list = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(groceries);
+			var userGroceries = req.user ? 
+				groceries.filter(function(item) { 
+					return item.user.id == req.user.id; 
+				}) : [];
+			res.jsonp(userGroceries);
 		}
 	});
 };

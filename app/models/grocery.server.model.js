@@ -10,11 +10,16 @@ var mongoose = require('mongoose'),
  * Grocery Schema
  */
 var GrocerySchema = new Schema({
-	name: {
+	item: {
 		type: String,
 		default: '',
-		required: 'Please fill Grocery name',
+		required: 'Please enter a grocery item',
 		trim: true
+	},
+	quantity: {
+		type: Number,
+		required: 'Please enter a quantity',
+		default: 1
 	},
 	created: {
 		type: Date,

@@ -1,8 +1,7 @@
 {
-  "name": "groceryapp",
-  "description": "A personal grocery list build with MEAN.js",
+  "name": "mean",
+  "description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
   "version": "0.0.1",
-  "author": "Eric Robitaille",
   "engines": {
     "node": "0.10.x",
     "npm": "1.4.x"
@@ -10,7 +9,7 @@
   "scripts": {
     "start": "grunt",
     "test": "grunt test",
-    "postinstall": "bower install --config.interactive=false"
+    "postinstall": "bower install --config.interactive=false",
     "install": "node node_modules/protractor/bin/webdriver-manager update"
   },
   "dependencies": {
@@ -44,6 +43,7 @@
     "chalk": "~0.5"
   },
   "devDependencies": {
+    "chance": "^0.7.3",
     "grunt-concurrent": "~1.0.0",
     "grunt-contrib-csslint": "^0.3.1",
     "grunt-contrib-cssmin": "~0.10.0",

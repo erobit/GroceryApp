@@ -6,11 +6,11 @@ module.exports = function(app) {
 
 	// Groceries Routes
 	app.route('/groceries')
-		.get(groceries.list)
+		.get(groceries.list, users.requiresLogin)
 		.post(users.requiresLogin, groceries.create);
 
 	app.route('/groceries/:groceryId')
-		.get(groceries.read)
+		.get(groceries.read, users.requiresLogin)
 		.put(users.requiresLogin, groceries.hasAuthorization, groceries.update)
 		.delete(users.requiresLogin, groceries.hasAuthorization, groceries.delete);
 
